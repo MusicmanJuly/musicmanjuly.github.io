@@ -508,7 +508,7 @@ class World2 extends World
             this.chestOpened = true;
         }
 
-        console.log(this.jade_left, this.jade_left.basicstate, this.jleftGot);
+        // console.log(this.jade_left, this.jade_left.basicstate, this.jleftGot);
         if (this.jade_left != null && this.jade_left.basicstate == Entity.STATES.DISPOSED
             && !this.jleftGot)
         {
@@ -519,7 +519,7 @@ class World2 extends World
             this.jleftGot = true;
         }
 
-        console.log(this.jade_right, this.jade_right.basicstate, this.jrightGot);
+        // console.log(this.jade_right, this.jade_right.basicstate, this.jrightGot);
         if (this.jade_right != null && this.jade_right.basicstate == Entity.STATES.DISPOSED
             && !this.jrightGot)
         {
@@ -807,7 +807,7 @@ class Gate extends Display
     {
         super.updateStatus(map);
 
-        console.log(this.left, this.right);
+        // console.log(this.left, this.right);
         if (this.left && this.right)
         {
             MUSICSOUND.paddoor_close.play();
