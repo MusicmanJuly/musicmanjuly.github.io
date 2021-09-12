@@ -9,10 +9,13 @@ var MUSICSOUND = {
     slime_hurt: null,
     hp_recover: null,
     boom: null,
+    paddoor_open: null,
+    paddoor_close: null,
 
     bgm_world1: null,
     bgm_world2: null,
     bgm_boss1: null,
+    bgm_congrat: null,
 }
 
 var musicPlaying = null;
@@ -37,17 +40,20 @@ function initMusicSound()
     MUSICSOUND.slime_hurt = s('slime_hurt.wav');
     MUSICSOUND.hp_recover = s('hp_recover.wav');
     MUSICSOUND.boom = s('boom.wav');
+    MUSICSOUND.paddoor_open = s('paddoor1.wav');
+    MUSICSOUND.paddoor_close = s('paddoor2.wav');
 
     MUSICSOUND.bgm_world1 = m('bgm_world1.mp3');
     MUSICSOUND.bgm_world2 = m('bgm_world2.mp3');
     MUSICSOUND.bgm_boss1 = m('bgm_boss1.mp3');
+    MUSICSOUND.bgm_congrat = m('bgm_congrat.mp3');
 }
 
 function musicTo(music = null, camera = null, name = "", volumn = 0.3)
 {
     if (musicPlaying != null)
     {
-        console.log(musicPlaying);
+        // console.log(musicPlaying);
         musicPlaying.setVolume(0, 2.0);
         musicPlaying.stop(2.2);
     }

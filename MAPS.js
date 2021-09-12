@@ -61,6 +61,7 @@ class MAP
 var MAPS = {
     world1: null,
     world2: null,
+    congrat: null,
 };
 
 function initMAPS()
@@ -76,7 +77,13 @@ function initMAPS()
         'assets/map/world2_fore.png',
         5, 31,
         'assets/map/world2_s.png'
-    )
+    );
+    MAPS.congrat = new MAP(
+        'assets/map/congrat_back.png',
+        'assets/map/congrat_fore.png',
+        9.2, 10,
+        'assets/map/congrat_s.png'
+    );
 }
 
 function analyzeMAPS()

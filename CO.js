@@ -1,7 +1,7 @@
 
 var CO = {
 
-    debug: true,
+    debug: false,
 
     display: {
         x: 1600,    // px

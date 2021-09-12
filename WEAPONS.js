@@ -371,5 +371,54 @@ W_Knife.ATK_ANI = 30;
 W_Knife.CRIT_FALLMIN = 27;
 W_Knife.CRIT_ANI = 50;
 
+class W_Clap extends Weapon
+{
+    constructor()
+    {
+        super('clap', 0, 1.0);
+
+        this.timer = 0;
+        this.timeSpan = 30;
+
+        this.willOverrideTexture = true;
+    }
+
+    action(chara)
+    {
+    }
+
+    /**
+     * @param {Character} chara 
+     */
+    addedControl(chara)
+    {
+        if (mouseIsPressed && !pmouseIsPressed)
+        {
+            this.timer = this.timeSpan;
+            this.overridingTexture = true;
+        }
+        else if (this.timer <= 0)
+        {
+            this.overridingTexture = false;
+        }
+        this.timer--;
+    }
+
+    /**
+     * @param {Character} chara 
+     */
+     overrideTexture(chara)
+     {
+        if (this.timer > 0)
+            chara.setTexture(ENTITIES.july.textures.happy);
+     }
+
+    rewind()
+    {
+        this.timer = 0;
+        this.overridingTexture = false;
+    }
+}
+
 
 

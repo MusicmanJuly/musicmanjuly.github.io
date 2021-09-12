@@ -120,6 +120,7 @@ var ENTITIES = {
             dead: null,
             awake: null,
             get_knife: null,
+            happy: null,
         },
         jumpHThres: 3.0,
         jumpLThres: 4.8,
@@ -263,6 +264,8 @@ function initENTITIES()
     ENTITIES.july.textures.get_knife.add(ch('j62'), 10);
     ENTITIES.july.textures.get_knife.add(ch('j63'), 10);
     ENTITIES.july.textures.get_knife.add(ch('j64'), 10);
+
+    ENTITIES.july.textures.happy = new Texture(32, 64, ch('j57'), true, 10);
 
     // Slime
     ENTITIES.slime.colli = new Collider(14, 10, 0, -3);
@@ -413,6 +416,7 @@ var DISPLAYS = {
     },
     chest: {
         closed: null,
+        open: null,
     },
     jade: {
         left: null,
@@ -494,6 +498,7 @@ function initDISPLAYS()
     DISPLAYS.key.main = new Texture(8, 8, dis('key'), false);
 
     DISPLAYS.chest.closed = new Texture(8, 16, dis('chest_closed'), false);
+    DISPLAYS.chest.open = new Texture(8, 16, dis('chest_open'), false);
 
     DISPLAYS.jade.left = new Texture(8, 8, dis('jade_left'), false);
     DISPLAYS.jade.right = new Texture(8, 8, dis('jade_right'), false);

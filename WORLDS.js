@@ -241,7 +241,8 @@ class World1 extends World
             this.progress = 2;
         }
 
-        if (this.hpbottle2 != null && this.hpbottle2.basicstate == Entity.STATES.DISPOSED)
+        if (this.progress == 2 && 
+            this.hpbottle2 != null && this.hpbottle2.basicstate == Entity.STATES.DISPOSED)
         {
             let region = [134, 187, 21, 55];
             let homepoint = createVector(172, 52);
@@ -251,7 +252,9 @@ class World1 extends World
             this.barricade2.addBinds(this.niu);
             this.barricade2.checkBinds = true;
 
-            musicTo(MUSICSOUND.bgm_boss1, this.camera, "♪  情動カタルシス", 0.4);
+            this.progress = 3;
+
+            musicTo(MUSICSOUND.bgm_boss1, this.camera, "♪  情動カタルシス - まんぼう二等兵", 0.4);
         }
 
         if (this.barricade2.basicstate == Entity.STATES.DISPOSED)
@@ -479,7 +482,6 @@ class World2 extends World
 
     action()
     {
-
         if (this.july.p.dist(createVector(40, 49.5).mult(32)) <= 100 &&
             this.july.weapon != null && 
             this.july.weapon instanceof W_Knife && 
@@ -502,6 +504,7 @@ class World2 extends World
             this.bomb = this.entities[this.entities.length] = 
                 new Bomb("bomb", this.chestLocation.copy().add(0, -4), 
                this.july, this.niu, +0.1, 150);
+            this.chest.setTexture(DISPLAYS.chest.open);
             this.chestOpened = true;
         }
 
@@ -535,11 +538,13 @@ class World2 extends World
             this.maptimer = 0;
             this.isout = true;
 
+            saved.worldId = -1;
+
             saved.completed = true;
 
             // console.log(saved);
 
-            this.july.setAppearAni(0, null);
+            this.july.setAppearAni(ENTITIES.july.appearSpan, ENTITIES.july.textures.awake);
         }
 
         super.action();
@@ -621,7 +626,7 @@ class Key extends Display
 
     action()
     {
-        if (this.state == 2 && this.p.dist(this.destination) <= 50)
+        if (this.state == 2 && this.v.mag() <= 5 && this.p.dist(this.destination) <= 20)
         {
             // 2 -> DISPOSED
             this.toDEAD();
@@ -640,7 +645,7 @@ class Key extends Display
 
         // update
         if (this.state == 1)
-            this.target = this.follow.p; 
+            this.target = this.follow.p.copy().add(0, -60); 
         else if (this.state == 2)
             this.target = this.destination;
         else
@@ -702,6 +707,9 @@ class PadDoor extends Display
             this.time = 0;
             this.timeSpan = 60;
 
+            // 0: closed, 1: open;
+            this.state = 0;
+
             this.off();
         }
     }
@@ -739,20 +747,30 @@ class PadDoor extends Display
 
     off()
     {
-        this.setTexture(DISPLAYS.paddoor.off);
-        for (var j=this.u+1; j<=this.d; j++)
-            this.map.addedsolids[this.x][j] = true;
-        for (var j=this.u+1; j<=this.d; j++)
-            this.map.addedsolids[this.x+1][j] = true;
+        if (this.state == 1)
+        {
+            MUSICSOUND.paddoor_close.play();
+            this.setTexture(DISPLAYS.paddoor.off);
+            for (var j=this.u+1; j<=this.d; j++)
+                this.map.addedsolids[this.x][j] = true;
+            for (var j=this.u+1; j<=this.d; j++)
+                this.map.addedsolids[this.x+1][j] = true;
+            this.state = 0;
+        }
     }
     
     on()
     {
-        this.setTexture(DISPLAYS.paddoor.on);
-        for (var j=this.u+1; j<=this.d; j++)
-            this.map.addedsolids[this.x][j] = false;
-        for (var j=this.u+1; j<=this.d; j++)
-            this.map.addedsolids[this.x+1][j] = false;
+        if (this.state == 0)
+        {
+            MUSICSOUND.paddoor_open.play();
+            this.setTexture(DISPLAYS.paddoor.on);
+            for (var j=this.u+1; j<=this.d; j++)
+                this.map.addedsolids[this.x][j] = false;
+            for (var j=this.u+1; j<=this.d; j++)
+                this.map.addedsolids[this.x+1][j] = false;
+            this.state = 1;
+        }
     }
 }
 
@@ -792,6 +810,7 @@ class Gate extends Display
         console.log(this.left, this.right);
         if (this.left && this.right)
         {
+            MUSICSOUND.paddoor_close.play();
             MUSICSOUND.get.play();
             this.toDEAD();
         }
@@ -802,5 +821,17 @@ class Gate extends Display
         for (var i=parseInt(this.l)+1; i<=this.r; i++)
             for (var j=parseInt(this.u)+1; j<=this.d; j++)
                 this.map.addedsolids[i][j] = false;
+    }
+}
+
+class WorldC extends World
+{
+    constructor()
+    {
+        super(MAPS.congrat, MAPS.congrat.spawnX, MAPS.congrat.spawnY, new W_Clap(), CO.usermove.maxHP);
+
+        musicTo(MUSICSOUND.bgm_congrat, this.camera, "♪　Liyue 璃月 - 陈致逸,HOYO-MiX");
+
+        this.july.setAppearAni(ENTITIES.july.appearSpan, ENTITIES.july.textures.awake);
     }
 }
